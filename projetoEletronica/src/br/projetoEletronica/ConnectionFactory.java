@@ -1,4 +1,4 @@
-package projetoEletronica;
+package br.projetoEletronica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

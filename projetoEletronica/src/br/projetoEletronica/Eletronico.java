@@ -1,12 +1,12 @@
-package projetoEletronica;
+package br.projetoEletronica;
 
-public class Eletrônico {
+public class Eletronico {
 	private String marca;
 	private String modelo;
 	private String numSerial;
 	
 	
-	public Eletrônico(String marca, String modelo, String numSerial) {
+	public Eletronico(String marca, String modelo, String numSerial) {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.numSerial = numSerial;

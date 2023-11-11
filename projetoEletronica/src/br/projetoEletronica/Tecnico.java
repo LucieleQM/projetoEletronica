@@ -1,4 +1,4 @@
-package projetoEletronica;
+package br.projetoEletronica;
 
 public class Tecnico extends Pessoa {
 	private int id;

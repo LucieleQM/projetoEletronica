@@ -1,9 +1,9 @@
-package projetoEletronica;
+package br.projetoEletronica;
 
 public abstract class Pessoa {
 	private String nome;
 	private String cpf;
-	private Endereco endereco;
+	private String endereco;
 	private String telefone;
 	private String email;
 	
@@ -16,7 +16,7 @@ public abstract class Pessoa {
 	}
 	
 
-	public Pessoa(String nome, String cpf, Endereco endereco, String telefone, String email) {
+	public Pessoa(String nome, String cpf, String endereco, String telefone, String email) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.endereco = endereco;
@@ -37,10 +37,10 @@ public abstract class Pessoa {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public Endereco getEndereco() {
+	public String getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(Endereco endereco) {
+	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 	public String getTelefone() {

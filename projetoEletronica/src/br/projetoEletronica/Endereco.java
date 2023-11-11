@@ -1,4 +1,4 @@
-package projetoEletronica;
+package br.projetoEletronica;
 
 public class Endereco {
 	private String rua;
