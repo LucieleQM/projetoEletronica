@@ -2,6 +2,7 @@ package br.projetoeletronica.dao;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -74,20 +75,9 @@ public class ClienteDAO extends GenericDAO<Cliente, String>{
 		        }
 		        
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Não foi possível inserir o cliente! Erro: " + e.getMessage());
 				e.printStackTrace();
 			}
-			
-			/* catch (SQLException e){
-				System.out.println("Não foi possível inserir o cliente! Erro: " + e.getMessage());
-				 e.printStackTrace();
-		        throw e;
-			}finally {
-				if (ps != null) {
-		            ps.close();
-		        }
-		       
-			}*/
 	}
 	
 	@Override
@@ -121,42 +111,4 @@ public class ClienteDAO extends GenericDAO<Cliente, String>{
 		}
 		
 	}
-	
-	
-	
- /*   public boolean registrarCliente(Cliente cliente) throws SQLException {
-        Connection con = new ConnectionFactory().getConnection();
-        String sqlCliente = "INSERT INTO clientes(nome, cpf, telefone, email) values (?,?,?,?)";
-        String sqlEndereco = "INSERT INTO endereco(rua, cidade, estado, cep, cliente_id) values (?,?,?,?,?)";
-        
-        try {
-            con.setAutoCommit(false);
-            
-            // Insere o cliente
-            try (PreparedStatement stmtCliente = con.prepareStatement(sqlCliente, Statement.RETURN_GENERATED_KEYS)) {
-                stmtCliente.setString(1, cliente.getNome());
-                stmtCliente.setString(2, cliente.getCpf());
-                stmtCliente.setString(3, cliente.getTelefone());
-                stmtCliente.setString(4, cliente.getEmail());
-                
-                stmtCliente.execute();
-                
-                // Obtém o ID gerado para o cliente
-                ResultSet generatedKeys = stmtCliente.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    cliente.setId(generatedKeys.getInt(1));
-                }
-            }
- 
-            
-            con.commit();
-            return true;
-        } catch (SQLException ex) {
-            con.rollback();
-            System.out.println("Não foi possível cadastrar o cliente!");
-            return false;
-        } finally {
-            con.close();
-        }
-    }*/
 }
