@@ -1,4 +1,4 @@
-package br.projetoEletronica;
+/*package br.projetoEletronica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ public class ConnectionFactory {
 	public Connection getConnection() {
 		
 		try {
-			Class.forName("com.postgresql.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 			return DriverManager.getConnection("jdbc:postgresql://localhost/dbeletronica", "postgres", "");
 		} catch (SQLException ex) {
 			System.out.println("Problema ao abrir o banco" + ex.getMessage());
@@ -19,4 +19,9 @@ public class ConnectionFactory {
 		}
 		return null;
 	}
-}
+}*/
+
+
+
+
+

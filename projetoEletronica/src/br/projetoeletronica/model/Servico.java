@@ -1,4 +1,4 @@
-package br.projetoEletronica;
+package br.projetoeletronica.model;
 
 public class Servico {
 	private Eletronico eletronico;

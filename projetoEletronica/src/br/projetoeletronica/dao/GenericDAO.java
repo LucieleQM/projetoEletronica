@@ -1,14 +1,24 @@
-package br.projetoEletronica;
+package br.projetoeletronica.dao;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 public abstract class GenericDAO<E,K> {
 	protected  Connection getConnection() throws Exception{
-		Class.forName("com.postgresql.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:postgresql://localhost/dbeletronica", null, null);
+		try {
+			Class.forName("org.postgresql.Driver");
+			return DriverManager.getConnection("jdbc:postgresql://localhost/dbeletronica", "postgres", "");
+		} catch (SQLException e) {
+			System.out.println("Problema ao abrir o banco" + e.getMessage());
+			return null;
+		} catch (ClassNotFoundException e) {
+			System.out.println("Problema ao carregar o driver de conexão!");
+			return null;
+		} 
 	}
 	
 	protected Statement getStatment() throws Exception{
@@ -19,7 +29,7 @@ public abstract class GenericDAO<E,K> {
 		st.getConnection().close();
 	}
 	
-	public abstract void inserir(E entidade);
+	public abstract void inserir(E entidade) throws Exception;
 	public abstract void excluir(K chave);
 	public abstract void alterar(E entidade);
 	public abstract E obter(K chave);

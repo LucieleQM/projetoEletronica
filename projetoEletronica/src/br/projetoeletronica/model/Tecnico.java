@@ -1,4 +1,4 @@
-package br.projetoEletronica;
+package br.projetoeletronica.model;
 
 public class Tecnico extends Pessoa {
 	private int id;
@@ -12,7 +12,7 @@ public class Tecnico extends Pessoa {
 	}
 
 
-	public Tecnico(String nome, String cpf, Endereco endereco, String telefone, String email, int id, boolean estado) {
+	public Tecnico(String nome, String cpf, String endereco, String telefone, String email, int id, boolean estado) {
 		super(nome, cpf, endereco, telefone, email);
 		this.id = id;
 		this.estado = estado;

@@ -1,4 +1,4 @@
-package br.projetoEletronica;
+package br.projetoeletronica.model;
 
 public abstract class Pessoa {
 	private String nome;
