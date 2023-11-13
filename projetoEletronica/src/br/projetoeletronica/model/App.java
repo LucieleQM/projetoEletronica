@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
+// Essa é a classe main do programa.
+// Nessa classe estão as informacoes mostradas no console
 public class App {
 
 	public static void main(String[] args) throws IOException {

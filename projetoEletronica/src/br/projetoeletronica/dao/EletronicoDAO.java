@@ -13,7 +13,7 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 	@Override
 	public void inserir(Eletronico entidade) throws Exception {
 		PreparedStatement ps = null;
-		String sql = "INSERT INTO eletronicos(num_serial, tipo, marca, modelo, cpf_cliente)" + 
+		String sql = "INSERT INTO eletronicos(num_serial, tipo, marca, modelo, cliente_cpf)" + 
 					 "values(?,?,?,?,?)";
 		
 		try {

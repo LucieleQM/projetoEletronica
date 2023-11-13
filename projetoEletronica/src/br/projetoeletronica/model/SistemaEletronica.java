@@ -8,9 +8,12 @@ import java.io.InputStreamReader;
 import br.projetoeletronica.dao.ClienteDAO;
 import br.projetoeletronica.dao.EletronicoDAO;
 
+// A funçao dessa classe e coordenar as ações do sistema.
+// Essa classe possui metodos que envolvem a interaçao com o usuario.
+
 public class SistemaEletronica {
 	
-	//Ler do teclado
+	//O objeto "entrada" serve para ler do teclado, como se fosse um Scanner.
 	private static final BufferedReader entrada = new BufferedReader (new InputStreamReader(System.in));
 	
 	// =========================================== Setor Cliente  =============================================================
@@ -40,16 +43,14 @@ public class SistemaEletronica {
         cliente.setEmail(entrada.readLine());
         
         try {
-            cliDAO.inserir(cliente);
-            
-            inserirEletronico(cliente);
+        	cliDAO.inserir(cliente);
+        	inserirEletronico(cliente);
+
             System.out.println("Cliente inserido com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro ao inserir o cliente: " + e.getMessage());
         }
-        
-        
-       
+  
 	}
 
 	public void excluirCliente() throws IOException{
