@@ -30,6 +30,8 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 		} catch (SQLException e){
 			System.out.println("Não foi possível inserir o eletronico! Erro: " + e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Erro Geral: " + e.getMessage());
 		}
 	}
 	

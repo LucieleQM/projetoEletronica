@@ -1,6 +1,7 @@
 package br.projetoeletronica.model;
 
 public abstract class Pessoa {
+	private long id;
 	private String nome;
 	private String cpf;
 	private String endereco;
@@ -16,12 +17,23 @@ public abstract class Pessoa {
 	}
 	
 
-	public Pessoa(String nome, String cpf, String endereco, String telefone, String email) {
+	public Pessoa(long id,String nome, String cpf, String endereco, String telefone, String email) {
+		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.email = email;
+	}
+
+
+	public long getId() {
+		return id;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 

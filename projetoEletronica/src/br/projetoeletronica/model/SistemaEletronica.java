@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import br.projetoeletronica.dao.ClienteDAO;
 import br.projetoeletronica.dao.EletronicoDAO;
+import br.projetoeletronica.dao.TecnicoDAO;
 
 // A funçao dessa classe e coordenar as ações do sistema.
 // Essa classe possui metodos que envolvem a interaçao com o usuario.
@@ -19,14 +20,14 @@ public class SistemaEletronica {
 	// =========================================== Setor Cliente  =============================================================
 	private final ClienteDAO cliDAO = new ClienteDAO();
 	
-	private void exibir(Cliente cliente) {
+	private void exibirCliente(Cliente cliente) {
 		System.out.println("\nCliente: " + cliente.getNome() + "\nCPF: " + cliente.getCpf() + "\nEndereço: " + cliente.getEndereco() +
 				"\nTelefone: " + cliente.getTelefone() + "\nEmail: " + cliente.getEmail() +
 				"\n=========================================================================");
 	}
 	
-	public void exibirTodos() {
-		cliDAO.obterTodos().forEach(cliente->exibir(cliente));
+	public void exibirTodosClientes() {
+		cliDAO.obterTodos().forEach(cliente->exibirCliente(cliente));
 	}
 	
 	public void inserirCliente() throws IOException{
@@ -83,6 +84,51 @@ public class SistemaEletronica {
             System.out.println("\nErro ao inserir eletronico: " + e.getMessage());
         }
 		
+	}
+	
+	
+	// =========================================== Setor Tecnico =============================================================
+	private final TecnicoDAO tecDAO = new TecnicoDAO();
+	
+	private void exibirTecnico(Tecnico tecnico) {
+		System.out.println("\nTecnico: " + tecnico.getNome() + "\nID: "+ tecnico.getId() +"\nCPF: " + tecnico.getCpf() + "\nEndereço: " + tecnico.getEndereco() +
+				"\nTelefone: " + tecnico.getTelefone() + "\nEmail: " + tecnico.getEmail() +
+				"\n=========================================================================");
+	}
+	
+	public void exibirTodosTecnicos() {
+		tecDAO.obterTodos().forEach(tecnico->exibirTecnico(tecnico));
+	}
+	
+	public void inserirTecnico() throws IOException {
+		Tecnico tecnico = new Tecnico();
+		
+		System.out.println("======================= CADASTRO TECNICO =======================");
+        System.out.println("\nNome:");
+        tecnico.setNome(entrada.readLine());
+        System.out.println("\nCPF:");
+        tecnico.setCpf(entrada.readLine());
+        System.out.println("\nEndereço:");
+        tecnico.setEndereco(entrada.readLine());
+        System.out.println("\nTelefone:");
+        tecnico.setTelefone(entrada.readLine());
+        System.out.println("\nEmail:");
+        tecnico.setEmail(entrada.readLine());
+		
+		try {
+            tecDAO.inserir(tecnico);
+            System.out.println("\nTecnico cadastrado com sucesso!");
+            
+        } catch (Exception e) {
+            System.out.println("\nErro ao cadastrar técnico: " + e.getMessage());
+        }
+	
+	}
+	
+	public void excluirTecnico() throws IOException{
+		System.out.println("Informe o ID: ");
+		long id = Long.parseLong(entrada.readLine());
+		tecDAO.excluir(id);
 	}
 	
 	}
