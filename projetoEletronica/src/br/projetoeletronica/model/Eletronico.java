@@ -6,19 +6,29 @@ public class Eletronico {
 	private String marca;
 	private String modelo;
 	private Cliente cliente;
+	private String avarias;
 
 	public Eletronico() {
 		
 	}
 	
-	public Eletronico(String numSerial,String tipo,String marca, String modelo, Cliente cliente) {
+	public Eletronico(String numSerial,String tipo,String marca, String modelo, Cliente cliente, String avarias) {
 		this.numSerial = numSerial;
 		this.tipo = tipo;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.cliente = cliente;
+		this.avarias = avarias;
 	}
 
+
+	public String getAvarias() {
+		return avarias;
+	}
+
+	public void setAvarias(String avarias) {
+		this.avarias = avarias;
+	}
 
 	public Cliente getCliente() {
 		return cliente;

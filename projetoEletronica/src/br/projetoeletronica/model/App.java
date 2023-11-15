@@ -1,19 +1,22 @@
 package br.projetoeletronica.model;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 // Essa é a classe main do programa.
 // Nessa classe estão as informacoes mostradas no console
 public class App {
-
 	public static void main(String[] args) throws IOException {
 		SistemaEletronica sistema = new SistemaEletronica();
 		BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+		
+		
 		while (true) {
+			
 			System.out.println("1- Tecnico\t2- Cliente\t3- Eletronico\t0- Sair");
-			System.out.println("================================================\n");
+			System.out.println("================================================================\n");
 			int opcao = Integer.parseInt(entrada.readLine());
 			
 			if (opcao == 0) 
@@ -22,6 +25,7 @@ public class App {
 			if (opcao == 1) {
 				while(true) {
 					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
+					System.out.println("================================================================\n");
 					opcao = Integer.parseInt(entrada.readLine());
 					
 					if (opcao == 0)
@@ -44,6 +48,7 @@ public class App {
 			if (opcao == 2) {
 				while(true) {
 					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
+					System.out.println("================================================================\n");
 					opcao = Integer.parseInt(entrada.readLine());
 					
 					if (opcao == 0)
@@ -63,9 +68,10 @@ public class App {
 				}
 			}
 			
-			/*if (opcao == 3) {
+			if (opcao == 3) {
 				while(true) {
 					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
+					System.out.println("================================================================\n");
 					opcao = Integer.parseInt(entrada.readLine());
 					
 					if (opcao == 0)
@@ -75,7 +81,8 @@ public class App {
 							sistema.exibirTodosEletronicos();
 							break;
 						case(2):
-							sistema.inserirEletronico();
+							Cliente cliente = new Cliente();
+							sistema.inserirEletronico(cliente);
 							break;
 						case(3):
 							sistema.excluirEletronico();
@@ -83,7 +90,7 @@ public class App {
 					}
 					
 				}
-			}*/
+			}
 		}
 		
 		

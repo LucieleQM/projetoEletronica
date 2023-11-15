@@ -11,38 +11,6 @@ import java.util.List;
 import br.projetoeletronica.model.Cliente;
 
 public class ClienteDAO extends GenericDAO<Cliente, String>{
-	@Override
-	public List<Cliente> obterTodos() {
-		List<Cliente> lista = new ArrayList<>();
-		try {
-			ResultSet r1 = getStatment().executeQuery("SELECT * FROM clientes");
-			while(r1.next())
-				lista.add(new Cliente(r1.getLong("ID"), r1.getString("NOME"), r1.getString("CPF"), r1.getString("ENDERECO"),
-						r1.getString("TELEFONE"), r1.getString("EMAIL")));
-			closeStatement(r1.getStatement());
-		} catch (Exception e) {
-			return null;
-		}
-		return lista;
-	}
-	
-	@Override
-	public Cliente obter(String chave) {
-		Cliente cliente = null;
-		try {
-			PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM clientes WHERE CPF = ?");
-			ps .setString(2, chave);
-			ResultSet r1 = ps.executeQuery();
-			if (r1.next())
-				cliente = new Cliente(r1.getLong("ID"), r1.getString("CPF"), r1.getString("NOME"), r1.getString("ENDERECO"),
-						r1.getString("TELEFONE"), r1.getString("EMAIL"));
-			closeStatement(ps);
-		} catch (Exception e) {
-			
-		}
-		return cliente;
-	}
-	
 	
 	@Override
 	public void inserir(Cliente cliente) throws Exception {
@@ -105,8 +73,50 @@ public class ClienteDAO extends GenericDAO<Cliente, String>{
 			ps.executeUpdate();
 			closeStatement(ps);
 		} catch (Exception e) {
-			
+			System.out.println("Não foi possível alterar o cliente! " + e.getMessage());
 		}
 		
 	}
+	
+	@Override
+	public List<Cliente> obterTodos() {
+		List<Cliente> lista = new ArrayList<>();
+		try {
+			ResultSet r1 = getStatment().executeQuery("SELECT * FROM clientes");
+			while(r1.next())
+				lista.add(new Cliente(r1.getLong("ID"), 
+						r1.getString("NOME"), 
+						r1.getString("CPF"), 
+						r1.getString("ENDERECO"),
+						r1.getString("TELEFONE"), 
+						r1.getString("EMAIL"),
+						null));
+			closeStatement(r1.getStatement());
+		} catch (Exception e) {
+			return null;
+		}
+		return lista;
+	}
+	
+	@Override
+	public Cliente obter(String chave) {
+		Cliente cliente = null;
+		try {
+			PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM clientes WHERE CPF = ?");
+			ps .setString(1, chave);
+			ResultSet r1 = ps.executeQuery();
+			if (r1.next())
+				cliente = new Cliente(r1.getLong("ID"), 
+						r1.getString("CPF"), 
+						r1.getString("NOME"), 
+						r1.getString("ENDERECO"),
+						r1.getString("TELEFONE"), 
+						r1.getString("EMAIL"), null);
+			closeStatement(ps);
+		} catch (Exception e) {
+			
+		}
+		return cliente;
+	}
+
 }

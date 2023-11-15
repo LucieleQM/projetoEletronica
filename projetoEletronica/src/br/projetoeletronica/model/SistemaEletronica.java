@@ -2,6 +2,7 @@ package br.projetoeletronica.model;
 
 import java.io.BufferedReader;
 
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -29,6 +30,15 @@ public class SistemaEletronica {
 	public void exibirTodosClientes() {
 		cliDAO.obterTodos().forEach(cliente->exibirCliente(cliente));
 	}
+	
+	/*public Cliente obterClientePorCPF(String cpf) {
+	    try {
+	        return cliDAO.obter(cpf);
+	    } catch (Exception e) {
+	        System.out.println("Erro ao obter cliente por CPF: " + e.getMessage());
+	        return null;
+	    }
+	}*/
 	
 	public void inserirCliente() throws IOException{
         Cliente cliente = new Cliente();
@@ -63,8 +73,11 @@ public class SistemaEletronica {
 	// =========================================== Setor Eletronico =============================================================
 	private final EletronicoDAO eletDAO = new EletronicoDAO();
 	
+	
 	public void inserirEletronico(Cliente cliente) throws IOException {
 		Eletronico eletronico = new Eletronico();
+		//Cliente cliente = new Cliente();
+		
 		System.out.println("\n\nNum Serial: ");
 		eletronico.setNumSerial(entrada.readLine());
 		System.out.println("Tipo: ");
@@ -73,17 +86,54 @@ public class SistemaEletronica {
 		eletronico.setMarca(entrada.readLine());
 		System.out.println("Modelo: ");
 		eletronico.setModelo(entrada.readLine());
-		System.out.println("Cliente: ");
-		eletronico.setCliente(cliente);
+		System.out.println("Avarias: ");
+		eletronico.setAvarias(entrada.readLine());
 		
-		try {
-            eletDAO.inserir(eletronico);
+		if (cliente.getCpf() == null) {
+			System.out.println("Cliente: ");
+			String cpfCliente = entrada.readLine();
+			cliente.setCpf(cpfCliente);
+			
+			eletronico.setCliente(cliente);
+			
+			try {
+	            eletDAO.inserir(eletronico);
 
-            System.out.println("\nEletronico inserido com sucesso!");
-        } catch (Exception e) {
-            System.out.println("\nErro ao inserir eletronico: " + e.getMessage());
-        }
+	            System.out.println("\nEletronico inserido com sucesso!");
+	        } catch (Exception e) {
+	            System.out.println("\nErro ao inserir eletronico: " + e.getMessage());
+	        }
+			
+		} else {
+			eletronico.setCliente(cliente);
+			
+			try {
+	            eletDAO.inserir(eletronico);
+
+	            System.out.println("\nEletronico inserido com sucesso!");
+	        } catch (Exception e) {
+	            System.out.println("\nErro ao inserir eletronico: " + e.getMessage());
+	        }
+		}
 		
+	}
+	
+	
+	public void excluirEletronico() throws IOException {
+		System.out.println("Informe o Número Serial: ");
+        String num_serial = entrada.readLine();
+       eletDAO.excluir(num_serial);
+
+	}
+	
+	public void exibirEletronico(Eletronico eletronico) {
+		System.out.println("\nNumero Serial: " + eletronico.getNumSerial() + "\nTipo: " + eletronico.getTipo() + "\nMarca: " + eletronico.getMarca() +
+				"\nModelo: " + eletronico.getModelo() + "\nCliente: " + eletronico.getCliente().getCpf() +
+				"\n=========================================================================");
+	}
+	
+	public void exibirTodosEletronicos() {
+		eletDAO.obterTodos().forEach(eletronico->exibirEletronico(eletronico));
 	}
 	
 	

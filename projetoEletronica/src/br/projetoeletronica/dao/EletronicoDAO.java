@@ -1,20 +1,23 @@
 package br.projetoeletronica.dao;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.projetoeletronica.model.Cliente;
 import br.projetoeletronica.model.Eletronico;
 
 public class EletronicoDAO extends GenericDAO<Eletronico, String>{
+	
+	// metodo insert OK
 	@Override
 	public void inserir(Eletronico entidade) throws Exception {
 		PreparedStatement ps = null;
-		String sql = "INSERT INTO eletronicos(num_serial, tipo, marca, modelo, cliente_cpf)" + 
-					 "values(?,?,?,?,?)";
+		String sql = "INSERT INTO eletronicos(num_serial, tipo, marca, modelo, cliente_cpf, avarias)" + 
+					 "values(?,?,?,?,?,?)";
 		
 		try {
 			ps = getConnection().prepareStatement(sql);
@@ -23,6 +26,7 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 			ps.setString(3, entidade.getMarca());
 			ps.setString(4, entidade.getModelo());
 			ps.setString(5, entidade.getCliente().getCpf());
+			ps.setString(6, entidade.getAvarias());
 			
 			ps.executeUpdate();
 			closeStatement(ps);
@@ -34,29 +38,90 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 			System.out.println("Erro Geral: " + e.getMessage());
 		}
 	}
-	
+	// metodo delete OK
 	@Override
 	public void excluir(String chave) {
-		// TODO Auto-generated method stub
+		try {
+			PreparedStatement ps = getConnection(). prepareStatement("DELETE FROM eletronicos WHERE NUM_SERIAL = ?");
+			ps.setString(1, chave);
+			ps.executeUpdate();
+			closeStatement(ps);
+		} catch (Exception e){
+			System.out.println("Não foi possível excluir o eletronico!\nErro: " + e.getMessage());
+		}
 		
 	}
-	
+	// metodo update falta implementar
 	@Override
 	public void alterar(Eletronico entidade) {
-		// TODO Auto-generated method stub
-		
+		try {
+			PreparedStatement ps = getConnection().prepareStatement("UPDATE FROM clientes SET TIPO = ?, MARCA = ?, MODELO = ?, CLIENTE_CPF = ?, AVARIAS = ?"
+					+ "WHERE NUM_SERIAL = ?");
+			ps.setString(1, entidade.getTipo());
+			ps.setString(2, entidade.getMarca());
+			ps.setString(3, entidade.getModelo());
+			ps.setString(4, entidade.getCliente().getCpf());
+			ps.setString(5, entidade.getAvarias());
+			ps.executeUpdate();
+			closeStatement(ps);
+		} catch (Exception e) {
+				
+		}	
 	}
+
 	
+	// metodo select where OK
 	@Override
 	public Eletronico obter(String chave) {
-		// TODO Auto-generated method stub
-		return null;
+		Eletronico eletronico = null;
+		try {
+			PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM eletronicos WHERE NUM_SERIAL = ?");
+			ps.setString(1, chave);
+			ResultSet r1 = ps.executeQuery();
+			if (r1.next()) {
+				String cpf = r1.getString("CLIENTE_CPF");
+				ClienteDAO clienteDAO = new ClienteDAO();
+				Cliente cliente = clienteDAO.obter(cpf);
+				
+				eletronico = new Eletronico(r1.getString("NUM_SERIAL"), 
+						r1.getString("TIPO"), 
+						r1.getString("MARCA"), 
+						r1.getString("MODELO"),
+						cliente,		
+						r1.getString("AVARIAS"));
+			closeStatement(ps);
+			}
+				
+		} catch (Exception e) {
+			System.out.println("Não foi possível obter o eletrônico!");
+		}
+		return eletronico; 
 	}
 	
+	// Metodo select OK
 	@Override
 	public List<Eletronico> obterTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Eletronico> lista = new ArrayList<>();
+		try {
+			ResultSet r1 = getStatment().executeQuery("SELECT * FROM Eletronicos");
+			while(r1.next()) {
+				String cpf = r1.getString("CLIENTE_CPF");
+				ClienteDAO clienteDAO = new ClienteDAO();
+				Cliente cliente = clienteDAO.obter(cpf);
+			
+				lista.add(new Eletronico(r1.getString("NUM_SERIAL"), 
+						r1.getString("TIPO"), 
+						r1.getString("MARCA"),
+						r1.getString("MODELO"), 
+						cliente,
+						r1.getString("AVARIAS")));
+			closeStatement(r1.getStatement());
+			}
+				
+		} catch (Exception e) {
+			System.out.println("Não foi possível obter os eletrônicos!" + e.getMessage());
+		}
+		return lista;
 	}
 	
 }

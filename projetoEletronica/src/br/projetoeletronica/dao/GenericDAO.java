@@ -11,7 +11,7 @@ public abstract class GenericDAO<E,K> {
 	protected  Connection getConnection() throws Exception{
 		try {
 			Class.forName("org.postgresql.Driver");
-			return DriverManager.getConnection("jdbc:postgresql://localhost/dbeletronica", "postgres", "senha");
+			return DriverManager.getConnection("jdbc:postgresql://localhost/dbeletronica", "postgres", "0727");
 		} catch (SQLException e) {
 			System.out.println("Problema ao abrir o banco" + e.getMessage());
 			return null;
