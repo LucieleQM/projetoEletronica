@@ -14,7 +14,7 @@ public class TipoServicoDAO extends GenericDAO<TipoServico, Long>{
 	public void inserir(TipoServico entidade) throws Exception {
 		PreparedStatement ps = null;
 		String sql= "INSERT INTO tiposServicos(nome, descricao, preco_base)" + 
-					" VALUES (?,?,?,?,?)";
+					" VALUES (?,?,?)";
 		try {
 			ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, entidade.getNome());
@@ -54,19 +54,19 @@ public class TipoServicoDAO extends GenericDAO<TipoServico, Long>{
 		}
 		
 	}
-	
+	// Precisa de ajuste
 	@Override
 	public void alterar(TipoServico entidade) {
 		try {
-			PreparedStatement ps = getConnection().prepareStatement("UPDATE FROM clientes SET NOME = ?, ENDERECO = ?, TELEFONE = ?, EMAIL = ?"
-					+ "WHERE CPF = ?");
+			PreparedStatement ps = getConnection().prepareStatement("UPDATE FROM tiposServicos SET NOME = ?, DESCRICAO = ?, PRECO_BASE = ?"
+					+ "WHERE ID = ?");
 			ps.setString(1, entidade.getNome());
 			ps.setString(2, entidade.getDescricao());
 			ps.setDouble(3, entidade.getPrecoBase());
 			ps.executeUpdate();
 			closeStatement(ps);
 		} catch (Exception e) {
-			System.out.println("Não foi possível alterar o cliente! " + e.getMessage());
+			System.out.println("Não foi possível alterar o Tipo de Servico! " + e.getMessage());
 		}	
 	}
 	
@@ -74,7 +74,7 @@ public class TipoServicoDAO extends GenericDAO<TipoServico, Long>{
 	public TipoServico obter(Long chave) {
 		TipoServico tpServico = null;
 		try {
-			PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM clientes WHERE CPF = ?");
+			PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM tiposServicos WHERE id = ?");
 			ps .setLong(1, chave);
 			ResultSet r1 = ps.executeQuery();
 			if (r1.next())

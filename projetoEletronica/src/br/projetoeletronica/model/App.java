@@ -15,18 +15,18 @@ public class App {
 		
 		while (true) {
 			
-			System.out.println("1- Tecnico\t2- Cliente\t3- Eletronico\t0- Sair");
-			System.out.println("================================================================\n");
-			int opcao = Integer.parseInt(entrada.readLine());
+			System.out.println("1- Tecnico\t2- Cliente\t3- Eletronico\t 4- Servico\t 5-Ordem de Servico\t 0- Sair");
+			System.out.println("=================================================================================================\n");
+			int opcaoMenu = Integer.parseInt(entrada.readLine());
 			
-			if (opcao == 0) 
+			if (opcaoMenu == 0) 
 				break;
 			
-			if (opcao == 1) {
+			if (opcaoMenu == 1) {
 				while(true) {
 					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
 					System.out.println("================================================================\n");
-					opcao = Integer.parseInt(entrada.readLine());
+					int opcao = Integer.parseInt(entrada.readLine());
 					
 					if (opcao == 0)
 						break;
@@ -45,11 +45,11 @@ public class App {
 				}
 			}
 			
-			if (opcao == 2) {
+			if (opcaoMenu == 2) {
 				while(true) {
 					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
 					System.out.println("================================================================\n");
-					opcao = Integer.parseInt(entrada.readLine());
+					int opcao = Integer.parseInt(entrada.readLine());
 					
 					if (opcao == 0)
 						break;
@@ -68,11 +68,11 @@ public class App {
 				}
 			}
 			
-			if (opcao == 3) {
+			if (opcaoMenu == 3) {
 				while(true) {
 					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
 					System.out.println("================================================================\n");
-					opcao = Integer.parseInt(entrada.readLine());
+					int opcao = Integer.parseInt(entrada.readLine());
 					
 					if (opcao == 0)
 						break;
@@ -89,6 +89,48 @@ public class App {
 							break;
 					}
 					
+				}
+			}
+			if (opcaoMenu == 4) {
+				while(true) {
+					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
+					System.out.println("================================================================\n");
+					int opcao = Integer.parseInt(entrada.readLine());
+					
+					if (opcao == 0)
+						break;
+					switch (opcao) {
+						case(1):
+							sistema.exibirTodosTipoServico();
+							break;
+						case(2):
+							sistema.inserirTipoServico();
+							break;
+						case(3):
+							sistema.excluirTipoServico();
+							break;
+					}	
+				}
+			}
+			if (opcaoMenu == 5) {
+				while(true) {
+					System.out.println("1- Listar\t2- Inserir\t3- Excluir\t0- Voltar");
+					System.out.println("================================================================\n");
+					int opcao = Integer.parseInt(entrada.readLine());
+					
+					if (opcao == 0)
+						break;
+					switch (opcao) {
+						case(1):
+							//sistema.exibirTodosOrdemServico();
+							break;
+						case(2):
+							sistema.inserirOrdemServico();
+							break;
+						case(3):
+							//sistema.excluirOrdemServico();
+							break;
+					}	
 				}
 			}
 		}

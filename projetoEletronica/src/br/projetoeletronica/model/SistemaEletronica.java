@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 
 import br.projetoeletronica.dao.ClienteDAO;
 import br.projetoeletronica.dao.EletronicoDAO;
+import br.projetoeletronica.dao.OrdemDeServicoDAO;
 import br.projetoeletronica.dao.TecnicoDAO;
 import br.projetoeletronica.dao.TipoServicoDAO;
 
@@ -63,6 +64,10 @@ public class SistemaEletronica {
             System.out.println("Erro ao inserir o cliente: " + e.getMessage());
         }
   
+	}
+	// FALTA IMPLEMENTAR
+	public void alterarCliente() throws IOException{
+		
 	}
 
 	public void excluirCliente() throws IOException{
@@ -187,6 +192,7 @@ public class SistemaEletronica {
 	// =========================================== Setor Tipo de Servicos =============================================================
 	private final TipoServicoDAO servDAO = new TipoServicoDAO();
 	
+	
 	public void inserirTipoServico() throws IOException {
 		TipoServico tpServico = new TipoServico();
 		
@@ -198,9 +204,9 @@ public class SistemaEletronica {
         
         System.out.println("\nPreço Base:");
         // Passar a entrada para double
-        String preco = entrada.readLine();
-        double precoDb = Double.parseDouble(preco);
-        tpServico.setPrecoBase(precoDb);
+        String precoSt = entrada.readLine();
+        double preco = Double.parseDouble(precoSt);
+        tpServico.setPrecoBase(preco);
 		
 		try {
             servDAO.inserir(tpServico);
@@ -208,9 +214,81 @@ public class SistemaEletronica {
             
         } catch (Exception e) {
             System.out.println("\nErro ao cadastrar servico: " + e.getMessage());
-        }
+        }	
 	}
 	
+	public void excluirTipoServico() throws IOException{
+        System.out.println("ID:");
+        // Passa a entrada de String para long
+        String idSt = entrada.readLine();
+        long id = Long.parseLong(idSt);
+        // String to long
+        servDAO.excluir(id);    
+	}
+	
+	public void alterarTipoServico() throws IOException {
+		
+	}
+	
+	public void exibirTipoServico(TipoServico tipoServico) {
+		System.out.println("\nId: " + tipoServico.getId() + "\nNome: " + tipoServico.getNome() + 
+				"\nDescricao: " + tipoServico.getDescricao() + "\nPreco Base: " + tipoServico.getPrecoBase() +
+				"\n=========================================================================");
+	}
+	
+	public void exibirTodosTipoServico() {
+		servDAO.obterTodos().forEach(tipoServico->exibirTipoServico(tipoServico));
+	}
+	
+	
+	
 	// =========================================== Setor Ordem de Servico =============================================================
+	private final OrdemDeServicoDAO ordemDAO = new OrdemDeServicoDAO();
+	
+	public void inserirOrdemServico() throws IOException {
+		OrdemDeServico ordServico = new OrdemDeServico();
+
+		System.out.println("======================= CADASTRAR ORDEM DE SERVICO =======================");
+		Cliente cliente = new Cliente();
+        System.out.println("\nCPF Do ClienteE:");
+        String cpfCliente = entrada.readLine();
+        cliente.setCpf(cpfCliente);
+        ordServico.setCliente(cliente);
+        
+        Eletronico eletronico = new Eletronico();
+        System.out.println("\nNUM_SERIAL do Eletronico:");
+        String numEletronico = entrada.readLine();
+        eletronico.setNumSerial(numEletronico);
+        ordServico.setEletronico(eletronico);
+        
+        Tecnico tecnico = new Tecnico();
+        System.out.println("\nID do Tecnico:");
+        String idTecnico = entrada.readLine();
+        long idT = Long.parseLong(idTecnico);
+        tecnico.setId(idT);
+        ordServico.setTecnico(tecnico);
+        
+        TipoServico servico = new TipoServico();
+        System.out.println("\nID do Servico:");
+        String idServico = entrada.readLine();
+        long idS = Long.parseLong(idServico);
+        servico.setId(idS);
+        ordServico.setTipoServico(servico);
+        
+        System.out.println("\nValor Total:");
+        // Passar a entrada para double
+        String precoSt = entrada.readLine();
+        double preco = Double.parseDouble(precoSt);
+        ordServico.setValorTotal(preco);
+		
+		try {
+			ordemDAO.inserir(ordServico);
+            System.out.println("\nServico cadastrado com sucesso!");
+            
+        } catch (Exception e) {
+            System.out.println("\nErro ao cadastrar servico: " + e.getMessage());
+        }	
+	}
+	
 	
 	}

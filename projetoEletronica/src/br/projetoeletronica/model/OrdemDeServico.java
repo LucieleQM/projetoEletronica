@@ -1,6 +1,10 @@
 package br.projetoeletronica.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OrdemDeServico {
 	private long id;
@@ -8,10 +12,11 @@ public class OrdemDeServico {
 	private Eletronico eletronico;
 	private TipoServico tipoServico;
 	private Tecnico tecnico;
+	private double valorTotal;
 	private Date DtRegistro;
 	private Date DtInicio;
 	private Date DtConclusao;
-	private double valorTotal;
+	
 	
 	
 	public OrdemDeServico() {
@@ -19,16 +24,20 @@ public class OrdemDeServico {
 	}
 		
 	public OrdemDeServico(long id, Cliente cliente, Eletronico eletronico, TipoServico tipoServico, Tecnico tecnico, double valorTotal,
-			Date dtRegistro, Date dtInicio, Date dtConclusao) {
+			Date dtRegistro, String dtInicio, String dtConclusao) {
 		this.id = id;
 		this.cliente = cliente;
 		this.eletronico = eletronico;
 		this.tipoServico = tipoServico;
 		this.tecnico = tecnico;
-		DtRegistro = dtRegistro;
-		DtInicio = dtInicio;
-		DtConclusao = dtConclusao;
 		this.valorTotal = valorTotal;
+		DtRegistro = dtRegistro;
+		try {
+			DtInicio = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dtInicio);
+			DtConclusao = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dtConclusao);
+		} catch (ParseException e) {
+			Logger.getLogger(OrdemDeServico.class.getName()).log(Level.SEVERE,null, e);
+		}
 	}
 
 	public long getId() {

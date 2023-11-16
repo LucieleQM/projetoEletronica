@@ -15,8 +15,8 @@ public class OrdemDeServicoDAO extends GenericDAO<OrdemDeServico, Long>{
 	public void inserir(OrdemDeServico entidade) throws Exception {
 		PreparedStatement ps = null;
         String sql = ("INSERT INTO OrdensServico (CLIENTE_CPF, ELETRONICO_NUM_SERIAL, "
-        			+ "TIPO_SERVICO_ID, TECNICO_ID, DT_INICIO, DT_CONCLUSAO) "
-        			+ "VALUES (?, ?, ?, ?, ?, ?)");
+        			+ "TIPO_SERVICO_ID, TECNICO_ID, DT_INICIO, DT_CONCLUSAO, VALOR_TOTAL) "
+        			+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
 		try {
 			ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entidade.getCliente().getCpf());
@@ -25,6 +25,8 @@ public class OrdemDeServicoDAO extends GenericDAO<OrdemDeServico, Long>{
             ps.setLong(4, entidade.getTecnico().getId());
             ps.setDate(5, (Date) entidade.getDtInicio());
             ps.setDate(6, (Date) entidade.getDtConclusao());
+            ps.setDouble(7, entidade.getValorTotal());
+            
             
             int affectedRows = ps.executeUpdate();
             closeStatement(ps);
