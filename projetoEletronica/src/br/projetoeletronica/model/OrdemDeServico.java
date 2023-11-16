@@ -11,13 +11,14 @@ public class OrdemDeServico {
 	private Date DtRegistro;
 	private Date DtInicio;
 	private Date DtConclusao;
+	private double valorTotal;
 	
 	
 	public OrdemDeServico() {
 		
 	}
 		
-	public OrdemDeServico(long id, Cliente cliente, Eletronico eletronico, TipoServico tipoServico, Tecnico tecnico,
+	public OrdemDeServico(long id, Cliente cliente, Eletronico eletronico, TipoServico tipoServico, Tecnico tecnico, double valorTotal,
 			Date dtRegistro, Date dtInicio, Date dtConclusao) {
 		this.id = id;
 		this.cliente = cliente;
@@ -27,6 +28,7 @@ public class OrdemDeServico {
 		DtRegistro = dtRegistro;
 		DtInicio = dtInicio;
 		DtConclusao = dtConclusao;
+		this.valorTotal = valorTotal;
 	}
 
 	public long getId() {
@@ -87,7 +89,12 @@ public class OrdemDeServico {
 	public void setDtConclusao(Date dtConclusao) {
 		DtConclusao = dtConclusao;
 	}
-	
-	
-	
+
+	public double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
 }

@@ -16,8 +16,8 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 	@Override
 	public void inserir(Eletronico entidade) throws Exception {
 		PreparedStatement ps = null;
-		String sql = "INSERT INTO eletronicos(num_serial, tipo, marca, modelo, cliente_cpf, avarias)" + 
-					 "values(?,?,?,?,?,?)";
+		String sql = "INSERT INTO eletronicos(num_serial, tipo, marca, modelo, cliente_cpf, avarias, defeito)" + 
+					 "values(?,?,?,?,?,?,?)";
 		
 		try {
 			ps = getConnection().prepareStatement(sql);
@@ -27,6 +27,7 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 			ps.setString(4, entidade.getModelo());
 			ps.setString(5, entidade.getCliente().getCpf());
 			ps.setString(6, entidade.getAvarias());
+			ps.setString(7, entidade.getDefeito());
 			
 			ps.executeUpdate();
 			closeStatement(ps);
@@ -55,13 +56,15 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 	@Override
 	public void alterar(Eletronico entidade) {
 		try {
-			PreparedStatement ps = getConnection().prepareStatement("UPDATE FROM clientes SET TIPO = ?, MARCA = ?, MODELO = ?, CLIENTE_CPF = ?, AVARIAS = ?"
+			PreparedStatement ps = getConnection().prepareStatement("UPDATE FROM clientes SET TIPO = ?, MARCA = ?, "
+					+ "MODELO = ?, CLIENTE_CPF = ?, AVARIAS = ?. DEFEITO = ?"
 					+ "WHERE NUM_SERIAL = ?");
 			ps.setString(1, entidade.getTipo());
 			ps.setString(2, entidade.getMarca());
 			ps.setString(3, entidade.getModelo());
 			ps.setString(4, entidade.getCliente().getCpf());
 			ps.setString(5, entidade.getAvarias());
+			ps.setString(6, entidade.getDefeito());
 			ps.executeUpdate();
 			closeStatement(ps);
 		} catch (Exception e) {
@@ -88,7 +91,8 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 						r1.getString("MARCA"), 
 						r1.getString("MODELO"),
 						cliente,		
-						r1.getString("AVARIAS"));
+						r1.getString("AVARIAS"),
+						r1.getString("DEFEITO"));
 			closeStatement(ps);
 			}
 				
@@ -114,7 +118,8 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 						r1.getString("MARCA"),
 						r1.getString("MODELO"), 
 						cliente,
-						r1.getString("AVARIAS")));
+						r1.getString("AVARIAS"),
+						r1.getString("DEFEITO")));
 			closeStatement(r1.getStatement());
 			}
 				

@@ -14,7 +14,7 @@ public class OrdemDeServicoDAO extends GenericDAO<OrdemDeServico, Long>{
 	@Override
 	public void inserir(OrdemDeServico entidade) throws Exception {
 		PreparedStatement ps = null;
-        String sql = ("INSERT INTO OrdemDeServico (CLIENTE_CPF, ELETRONICO_NUM_SERIAL, "
+        String sql = ("INSERT INTO OrdensServico (CLIENTE_CPF, ELETRONICO_NUM_SERIAL, "
         			+ "TIPO_SERVICO_ID, TECNICO_ID, DT_INICIO, DT_CONCLUSAO) "
         			+ "VALUES (?, ?, ?, ?, ?, ?)");
 		try {

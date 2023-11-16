@@ -7,18 +7,20 @@ public class Eletronico {
 	private String modelo;
 	private Cliente cliente;
 	private String avarias;
+	private String defeito;
 
 	public Eletronico() {
 		
 	}
 	
-	public Eletronico(String numSerial,String tipo,String marca, String modelo, Cliente cliente, String avarias) {
+	public Eletronico(String numSerial,String tipo,String marca, String modelo, Cliente cliente, String avarias, String defeito) {
 		this.numSerial = numSerial;
 		this.tipo = tipo;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.cliente = cliente;
 		this.avarias = avarias;
+		this.defeito = defeito;
 	}
 
 
@@ -72,5 +74,15 @@ public class Eletronico {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
+
+	public String getDefeito() {
+		return defeito;
+	}
+
+	public void setDefeito(String defeito) {
+		this.defeito = defeito;
+	}
+	
+	
 	
 }

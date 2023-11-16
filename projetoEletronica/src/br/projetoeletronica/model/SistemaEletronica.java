@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import br.projetoeletronica.dao.ClienteDAO;
 import br.projetoeletronica.dao.EletronicoDAO;
 import br.projetoeletronica.dao.TecnicoDAO;
+import br.projetoeletronica.dao.TipoServicoDAO;
 
 // A funçao dessa classe e coordenar as ações do sistema.
 // Essa classe possui metodos que envolvem a interaçao com o usuario.
@@ -88,6 +89,8 @@ public class SistemaEletronica {
 		eletronico.setModelo(entrada.readLine());
 		System.out.println("Avarias: ");
 		eletronico.setAvarias(entrada.readLine());
+		System.out.println("Defeito: ");
+		eletronico.setDefeito(entrada.readLine());
 		
 		if (cliente.getCpf() == null) {
 			System.out.println("Cliente: ");
@@ -127,8 +130,9 @@ public class SistemaEletronica {
 	}
 	
 	public void exibirEletronico(Eletronico eletronico) {
-		System.out.println("\nNumero Serial: " + eletronico.getNumSerial() + "\nTipo: " + eletronico.getTipo() + "\nMarca: " + eletronico.getMarca() +
-				"\nModelo: " + eletronico.getModelo() + "\nCliente: " + eletronico.getCliente().getCpf() +
+		System.out.println("\nNumero Serial: " + eletronico.getNumSerial() + "\nTipo: " + eletronico.getTipo() + 
+				"\nMarca: " + eletronico.getMarca() + "\nModelo: " + eletronico.getModelo() + "\nAvarias: " + eletronico.getAvarias() +
+				"\nDefeito: " + eletronico.getDefeito() + "\nCliente: " + eletronico.getCliente().getCpf() +
 				"\n=========================================================================");
 	}
 	
@@ -180,5 +184,33 @@ public class SistemaEletronica {
 		long id = Long.parseLong(entrada.readLine());
 		tecDAO.excluir(id);
 	}
+	// =========================================== Setor Tipo de Servicos =============================================================
+	private final TipoServicoDAO servDAO = new TipoServicoDAO();
+	
+	public void inserirTipoServico() throws IOException {
+		TipoServico tpServico = new TipoServico();
+		
+		System.out.println("======================= CADASTRAR SERVICO =======================");
+        System.out.println("\nNome:");
+        tpServico.setNome(entrada.readLine());
+        System.out.println("\nDescrição:");
+        tpServico.setDescricao(entrada.readLine());
+        
+        System.out.println("\nPreço Base:");
+        // Passar a entrada para double
+        String preco = entrada.readLine();
+        double precoDb = Double.parseDouble(preco);
+        tpServico.setPrecoBase(precoDb);
+		
+		try {
+            servDAO.inserir(tpServico);
+            System.out.println("\nServico cadastrado com sucesso!");
+            
+        } catch (Exception e) {
+            System.out.println("\nErro ao cadastrar servico: " + e.getMessage());
+        }
+	}
+	
+	// =========================================== Setor Ordem de Servico =============================================================
 	
 	}
