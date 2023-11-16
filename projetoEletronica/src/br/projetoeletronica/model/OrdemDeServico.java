@@ -39,6 +39,14 @@ public class OrdemDeServico {
 			Logger.getLogger(OrdemDeServico.class.getName()).log(Level.SEVERE,null, e);
 		}
 	}
+	
+	public void DtsEmDateFormat(String dtInicioString) {
+        try {
+            this.DtInicio = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dtInicioString);
+        } catch (ParseException e) {
+            Logger.getLogger(OrdemDeServico.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
 	public long getId() {
 		return id;

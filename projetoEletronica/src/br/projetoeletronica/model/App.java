@@ -125,7 +125,9 @@ public class App {
 							//sistema.exibirTodosOrdemServico();
 							break;
 						case(2):
-							sistema.inserirOrdemServico();
+						Cliente cliente = new Cliente();
+						Eletronico eletronico = new Eletronico();
+						sistema.inserirOrdemServico(cliente, eletronico);
 							break;
 						case(3):
 							//sistema.excluirOrdemServico();

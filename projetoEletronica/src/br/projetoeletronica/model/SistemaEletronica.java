@@ -44,6 +44,8 @@ public class SistemaEletronica {
 	
 	public void inserirCliente() throws IOException{
         Cliente cliente = new Cliente();
+ 
+       
         System.out.println("\nNome:");
         cliente.setNome(entrada.readLine());
         System.out.println("CPF:");
@@ -57,7 +59,8 @@ public class SistemaEletronica {
         
         try {
         	cliDAO.inserir(cliente);
-        	inserirEletronico(cliente);
+        	Eletronico eletronico = inserirEletronico(cliente);
+			inserirOrdemServico(cliente, eletronico);
 
             System.out.println("Cliente inserido com sucesso!");
         } catch (Exception e) {
@@ -80,7 +83,7 @@ public class SistemaEletronica {
 	private final EletronicoDAO eletDAO = new EletronicoDAO();
 	
 	
-	public void inserirEletronico(Cliente cliente) throws IOException {
+	public Eletronico inserirEletronico(Cliente cliente) throws IOException {
 		Eletronico eletronico = new Eletronico();
 		//Cliente cliente = new Cliente();
 		
@@ -123,6 +126,7 @@ public class SistemaEletronica {
 	            System.out.println("\nErro ao inserir eletronico: " + e.getMessage());
 	        }
 		}
+		return eletronico;
 		
 	}
 	
@@ -245,22 +249,32 @@ public class SistemaEletronica {
 	// =========================================== Setor Ordem de Servico =============================================================
 	private final OrdemDeServicoDAO ordemDAO = new OrdemDeServicoDAO();
 	
-	public void inserirOrdemServico() throws IOException {
+	public void inserirOrdemServico(Cliente cliente, Eletronico eletronico) throws IOException {
 		OrdemDeServico ordServico = new OrdemDeServico();
 
 		System.out.println("======================= CADASTRAR ORDEM DE SERVICO =======================");
-		Cliente cliente = new Cliente();
-        System.out.println("\nCPF Do ClienteE:");
-        String cpfCliente = entrada.readLine();
-        cliente.setCpf(cpfCliente);
-        ordServico.setCliente(cliente);
-        
-        Eletronico eletronico = new Eletronico();
-        System.out.println("\nNUM_SERIAL do Eletronico:");
-        String numEletronico = entrada.readLine();
-        eletronico.setNumSerial(numEletronico);
-        ordServico.setEletronico(eletronico);
-        
+	
+		if (cliente != null && eletronico != null) {
+			ordServico.setCliente(cliente);
+			ordServico.setEletronico(eletronico);
+		} else {
+			System.out.println("\nCPF Do ClienteE:");
+	        String cpfCliente = entrada.readLine();
+	        cliente.setCpf(cpfCliente);
+	        ordServico.setCliente(cliente);
+	        
+	        System.out.println("\nNUM_SERIAL do Eletronico:");
+	        String numEletronico = entrada.readLine();
+	        eletronico.setNumSerial(numEletronico);  
+		}
+		
+		TipoServico servico = new TipoServico();
+        System.out.println("\nID do Servico:");
+        String idServico = entrada.readLine();
+        long idS = Long.parseLong(idServico);
+        servico.setId(idS);
+        ordServico.setTipoServico(servico);
+		
         Tecnico tecnico = new Tecnico();
         System.out.println("\nID do Tecnico:");
         String idTecnico = entrada.readLine();
@@ -268,18 +282,12 @@ public class SistemaEletronica {
         tecnico.setId(idT);
         ordServico.setTecnico(tecnico);
         
-        TipoServico servico = new TipoServico();
-        System.out.println("\nID do Servico:");
-        String idServico = entrada.readLine();
-        long idS = Long.parseLong(idServico);
-        servico.setId(idS);
-        ordServico.setTipoServico(servico);
-        
         System.out.println("\nValor Total:");
         // Passar a entrada para double
         String precoSt = entrada.readLine();
         double preco = Double.parseDouble(precoSt);
         ordServico.setValorTotal(preco);
+
 		
 		try {
 			ordemDAO.inserir(ordServico);
