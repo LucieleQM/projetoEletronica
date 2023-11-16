@@ -56,19 +56,20 @@ public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 	@Override
 	public void alterar(Eletronico entidade) {
 		try {
-			PreparedStatement ps = getConnection().prepareStatement("UPDATE FROM clientes SET TIPO = ?, MARCA = ?, "
-					+ "MODELO = ?, CLIENTE_CPF = ?, AVARIAS = ?. DEFEITO = ?"
-					+ "WHERE NUM_SERIAL = ?");
+			PreparedStatement ps = getConnection().prepareStatement("UPDATE eletronicos SET tipo = ?, marca = ?, "
+					+ "modelo = ?, cpf_cliente = ?, avarias = ?, defeito = ?"
+					+ "WHERE num_serial = ?");
 			ps.setString(1, entidade.getTipo());
 			ps.setString(2, entidade.getMarca());
 			ps.setString(3, entidade.getModelo());
 			ps.setString(4, entidade.getCliente().getCpf());
 			ps.setString(5, entidade.getAvarias());
 			ps.setString(6, entidade.getDefeito());
+			ps.setString(7, entidade.getNumSerial());
 			ps.executeUpdate();
 			closeStatement(ps);
 		} catch (Exception e) {
-				
+				System.out.println("Erro: " + e.getMessage());
 		}	
 	}
 

@@ -1,13 +1,13 @@
 package br.projetoeletronica.dao;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.projetoeletronica.model.Cliente;
 import br.projetoeletronica.model.Tecnico;
 
 public class TecnicoDAO extends GenericDAO<Tecnico, Long>{
@@ -56,21 +56,48 @@ public class TecnicoDAO extends GenericDAO<Tecnico, Long>{
 			ps.executeUpdate();
 			closeStatement(ps);
 		} catch (Exception e){
-			System.out.println("Não foi possível excluir o cliente!\nErro: " + e.getMessage());
+			System.out.println("Não foi possível excluir o tecnico!\nErro: " + e.getMessage());
 		}
 		
 	}
 
 	@Override
 	public void alterar(Tecnico entidade) {
-		// TODO Auto-generated method stub
-		
+		try {
+			PreparedStatement ps = getConnection().prepareStatement("UPDATE tecnicos SET cpf = ?, nome = ?, endereco = ?, telefone = ?, email = ? "
+					+ "WHERE id = ?");
+			ps.setString(1, entidade.getCpf());
+			ps.setString(2, entidade.getNome());
+			ps.setString(3, entidade.getEndereco());
+			ps.setString(4, entidade.getTelefone());
+			ps.setString(5, entidade.getEmail());
+			ps.setLong(6, entidade.getId());
+			ps.executeUpdate();
+			closeStatement(ps);
+		} catch (Exception e) {
+			System.out.println("\nNão foi possível alterar o tecnico! " + e.getMessage());
+		}
 	}
 
 	@Override
 	public Tecnico obter(Long chave) {
-		// TODO Auto-generated method stub
-		return null;
+		Tecnico tecnico = null;
+		try {
+			PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM tecnicos WHERE id = ?");
+			ps .setLong(1, chave);
+			ResultSet r1 = ps.executeQuery();
+			if (r1.next())
+				tecnico = new Tecnico(r1.getLong("ID"), 
+						r1.getString("CPF"), 
+						r1.getString("NOME"), 
+						r1.getString("ENDERECO"),
+						r1.getString("TELEFONE"), 
+						r1.getString("EMAIL"));
+			closeStatement(ps);
+		} catch (Exception e) {
+			
+		}
+		return tecnico;
 	}
 
 	@Override

@@ -64,18 +64,18 @@ public class ClienteDAO extends GenericDAO<Cliente, String>{
 	@Override
 	public void alterar(Cliente cliente) {
 		try {
-			PreparedStatement ps = getConnection().prepareStatement("UPDATE FROM clientes SET NOME = ?, ENDERECO = ?, TELEFONE = ?, EMAIL = ?"
-					+ "WHERE CPF = ?");
+			PreparedStatement ps = getConnection().prepareStatement("UPDATE clientes SET nome = ?, endereco = ?, telefone = ?, email = ? "
+					+ "WHERE cpf = ?");
 			ps.setString(1, cliente.getNome());
 			ps.setString(2, cliente.getEndereco());
 			ps.setString(3, cliente.getTelefone());
 			ps.setString(4, cliente.getEmail());
+			ps.setString(5, cliente.getCpf());
 			ps.executeUpdate();
 			closeStatement(ps);
 		} catch (Exception e) {
-			System.out.println("Não foi possível alterar o cliente! " + e.getMessage());
-		}
-		
+			System.out.println("\nNão foi possível alterar o cliente! " + e.getMessage());
+		}	
 	}
 	
 	@Override

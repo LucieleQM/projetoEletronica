@@ -26,26 +26,30 @@ public class SistemaEletronica {
 	private void exibirCliente(Cliente cliente) {
 		System.out.println("\nCliente: " + cliente.getNome() + "\nCPF: " + cliente.getCpf() + "\nEndereço: " + cliente.getEndereco() +
 				"\nTelefone: " + cliente.getTelefone() + "\nEmail: " + cliente.getEmail() +
-				"\n=========================================================================");
+				"\n-----------------------------------------------");
 	}
 	
 	public void exibirTodosClientes() {
 		cliDAO.obterTodos().forEach(cliente->exibirCliente(cliente));
 	}
 	
-	/*public Cliente obterClientePorCPF(String cpf) {
-	    try {
-	        return cliDAO.obter(cpf);
+	public void procurarCliente() throws IOException{
+		Cliente cliente = new Cliente();
+		String cpf = null;
+		System.out.println("\nInforme o CPF do Cliente: ");
+		cpf = entrada.readLine();
+		try {
+	        cliente =  cliDAO.obter(cpf);
+	        exibirCliente(cliente);
 	    } catch (Exception e) {
-	        System.out.println("Erro ao obter cliente por CPF: " + e.getMessage());
-	        return null;
+	        System.out.println("\nErro ao obter cliente por CPF: " + e.getMessage());
+	   
 	    }
-	}*/
+	}
 	
 	public void inserirCliente() throws IOException{
         Cliente cliente = new Cliente();
  
-       
         System.out.println("\nNome:");
         cliente.setNome(entrada.readLine());
         System.out.println("CPF:");
@@ -68,9 +72,27 @@ public class SistemaEletronica {
         }
   
 	}
-	// FALTA IMPLEMENTAR
+	
 	public void alterarCliente() throws IOException{
+		Cliente cliente = new Cliente();
+		System.out.println("Informe o CPF do Cliente: ");
+		cliente.setCpf(entrada.readLine());
 		
+		System.out.println("\nNome:");
+        cliente.setNome(entrada.readLine());
+        System.out.println("Endereço:");
+        cliente.setEndereco(entrada.readLine());
+        System.out.println("Telefone:");
+        cliente.setTelefone(entrada.readLine());
+        System.out.println("Email:");
+        cliente.setEmail(entrada.readLine());
+        
+        try {
+        	cliDAO.alterar(cliente);
+        	System.out.println("\nCliente alterado com sucesso!");
+        } catch (Exception e){
+        	System.out.println("\nErro ao alterar o cliente: " + e.getMessage());
+        }
 	}
 
 	public void excluirCliente() throws IOException{
@@ -85,7 +107,6 @@ public class SistemaEletronica {
 	
 	public Eletronico inserirEletronico(Cliente cliente) throws IOException {
 		Eletronico eletronico = new Eletronico();
-		//Cliente cliente = new Cliente();
 		
 		System.out.println("\n\nNum Serial: ");
 		eletronico.setNumSerial(entrada.readLine());
@@ -129,7 +150,37 @@ public class SistemaEletronica {
 		return eletronico;
 		
 	}
-	
+	//Nao ta funcionando
+	/*public void alterarEletronico() throws IOException{
+		Eletronico eletronico = new Eletronico();
+		System.out.println("Informe o Número Serial: ");
+		eletronico.setNumSerial(entrada.readLine());
+		
+		System.out.println("\nTipo:");
+		eletronico.setTipo(entrada.readLine());
+        System.out.println("Marca:");
+        eletronico.setMarca(entrada.readLine());
+        System.out.println("Modelo:");
+        eletronico.setModelo(entrada.readLine());
+       
+        Cliente cliente = new Cliente();
+        System.out.println("Cliente:");
+        String cpfCliente = entrada.readLine();
+		cliente.setCpf(cpfCliente);
+		eletronico.setCliente(cliente);
+		
+        System.out.println("Avarias:");
+        eletronico.setAvarias(entrada.readLine());
+        System.out.println("Defeito:");
+        eletronico.setDefeito(entrada.readLine());
+        
+        try {
+        	eletDAO.alterar(eletronico);
+        	System.out.println("\nEletronico alterado com sucesso!");
+        } catch (Exception e){
+        	System.out.println("\nErro ao alterar o eletronico: " + e.getMessage());
+        }
+	}*/
 	
 	public void excluirEletronico() throws IOException {
 		System.out.println("Informe o Número Serial: ");
@@ -142,11 +193,24 @@ public class SistemaEletronica {
 		System.out.println("\nNumero Serial: " + eletronico.getNumSerial() + "\nTipo: " + eletronico.getTipo() + 
 				"\nMarca: " + eletronico.getMarca() + "\nModelo: " + eletronico.getModelo() + "\nAvarias: " + eletronico.getAvarias() +
 				"\nDefeito: " + eletronico.getDefeito() + "\nCliente: " + eletronico.getCliente().getCpf() +
-				"\n=========================================================================");
+				"\n-----------------------------------------------");
 	}
 	
 	public void exibirTodosEletronicos() {
 		eletDAO.obterTodos().forEach(eletronico->exibirEletronico(eletronico));
+	}
+	
+	public void procurarEletronico() throws IOException{
+		Eletronico eletronico = new Eletronico();
+		String num_serial = null;
+		System.out.println("\nInforme o Numero Serial do Eletronico: ");
+		num_serial = entrada.readLine();
+		try {
+	        eletronico =  eletDAO.obter(num_serial);
+	        exibirEletronico(eletronico);
+	    } catch (Exception e) {
+	        System.out.println("\nErro ao obter eletronico por Id: " + e.getMessage());
+	    }
 	}
 	
 	
@@ -156,11 +220,24 @@ public class SistemaEletronica {
 	private void exibirTecnico(Tecnico tecnico) {
 		System.out.println("\nTecnico: " + tecnico.getNome() + "\nID: "+ tecnico.getId() +"\nCPF: " + tecnico.getCpf() + "\nEndereço: " + tecnico.getEndereco() +
 				"\nTelefone: " + tecnico.getTelefone() + "\nEmail: " + tecnico.getEmail() +
-				"\n=========================================================================");
+				"\n-----------------------------------------------");
 	}
 	
 	public void exibirTodosTecnicos() {
 		tecDAO.obterTodos().forEach(tecnico->exibirTecnico(tecnico));
+	}
+	
+	public void procurarTecnico() throws IOException{
+		Tecnico tecnico = new Tecnico();
+		long id;
+		System.out.println("\nInforme o Id do Tecnico: ");
+		id = Long.parseLong(entrada.readLine());
+		try {
+	        tecnico =  tecDAO.obter(id);
+	        exibirTecnico(tecnico);
+	    } catch (Exception e) {
+	        System.out.println("\nErro ao obter tecnico por Id: " + e.getMessage());
+	    }
 	}
 	
 	public void inserirTecnico() throws IOException {
@@ -188,6 +265,31 @@ public class SistemaEletronica {
 	
 	}
 	
+	public void alterarTecnico() throws IOException{
+		Tecnico tecnico = new Tecnico();
+		System.out.println("Informe o Id do Tecnico: ");
+		long id = Long.parseLong(entrada.readLine());
+		tecnico.setId(id);
+		
+		System.out.println("\nCPF:");
+        tecnico.setCpf(entrada.readLine());
+		System.out.println("\nNome:");
+		tecnico.setNome(entrada.readLine());
+        System.out.println("\nEndereço:");
+        tecnico.setEndereco(entrada.readLine());
+        System.out.println("\nTelefone:");
+        tecnico.setTelefone(entrada.readLine());
+        System.out.println("\nEmail:");
+        tecnico.setEmail(entrada.readLine());
+        
+        try {
+        	tecDAO.alterar(tecnico);
+        	System.out.println("\nTecnico  alterado com sucesso!");
+        } catch (Exception e){
+        	System.out.println("\nErro ao alterar o tecnico : " + e.getMessage());
+        }
+	}
+	
 	public void excluirTecnico() throws IOException{
 		System.out.println("Informe o ID: ");
 		long id = Long.parseLong(entrada.readLine());
@@ -195,7 +297,6 @@ public class SistemaEletronica {
 	}
 	// =========================================== Setor Tipo de Servicos =============================================================
 	private final TipoServicoDAO servDAO = new TipoServicoDAO();
-	
 	
 	public void inserirTipoServico() throws IOException {
 		TipoServico tpServico = new TipoServico();
@@ -237,7 +338,7 @@ public class SistemaEletronica {
 	public void exibirTipoServico(TipoServico tipoServico) {
 		System.out.println("\nId: " + tipoServico.getId() + "\nNome: " + tipoServico.getNome() + 
 				"\nDescricao: " + tipoServico.getDescricao() + "\nPreco Base: " + tipoServico.getPrecoBase() +
-				"\n=========================================================================");
+				"\n-----------------------------------------------");
 	}
 	
 	public void exibirTodosTipoServico() {
@@ -296,6 +397,31 @@ public class SistemaEletronica {
         } catch (Exception e) {
             System.out.println("\nErro ao cadastrar servico: " + e.getMessage());
         }	
+	}
+	
+	public void excluirOrdemServico() throws IOException{
+		System.out.println("Informe o ID: ");
+		long id = Long.parseLong(entrada.readLine());
+		ordemDAO.excluir(id);
+	}
+	
+	public void exibirOrdemServico(OrdemDeServico ordServico) {
+		System.out.println("\nId do Servico: " + ordServico.getId() +
+				"\nCliente: " + ordServico.getCliente().getNome() + 
+				"\nCPF: " + ordServico.getCliente().getCpf() + 
+				"\n" +
+				"\nEletronico: " + ordServico.getEletronico().getNumSerial() +
+				"\nMarca: " + ordServico.getEletronico().getMarca() +
+				"\nModelo: " + ordServico.getEletronico().getModelo() + 
+				"\n" +
+				"\nTecnico: " + ordServico.getTecnico().getNome() +
+				"\nServico: " + ordServico.getTipoServico().getNome() +
+				"\nValor Total: " + ordServico.getValorTotal() +
+				"\n-----------------------------------------------");
+	}
+	
+	public void exibirTodosOrdemServico() {
+		ordemDAO.obterTodos().forEach(ordServico->exibirOrdemServico(ordServico));
 	}
 	
 	

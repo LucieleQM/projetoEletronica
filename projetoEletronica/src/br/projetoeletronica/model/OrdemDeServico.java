@@ -24,7 +24,7 @@ public class OrdemDeServico {
 	}
 		
 	public OrdemDeServico(long id, Cliente cliente, Eletronico eletronico, TipoServico tipoServico, Tecnico tecnico, double valorTotal,
-			Date dtRegistro, String dtInicio, String dtConclusao) {
+			Date dtRegistro, Date dtInicio, Date dtConclusao) {
 		this.id = id;
 		this.cliente = cliente;
 		this.eletronico = eletronico;
@@ -32,7 +32,7 @@ public class OrdemDeServico {
 		this.tecnico = tecnico;
 		this.valorTotal = valorTotal;
 		DtRegistro = dtRegistro;
-		try {
+		/*try {
 			DtInicio = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dtInicio);
 			DtConclusao = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dtConclusao);
 		} catch (ParseException e) {
@@ -45,7 +45,7 @@ public class OrdemDeServico {
             this.DtInicio = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dtInicioString);
         } catch (ParseException e) {
             Logger.getLogger(OrdemDeServico.class.getName()).log(Level.SEVERE, null, e);
-        }
+        }*/
     }
 
 	public long getId() {

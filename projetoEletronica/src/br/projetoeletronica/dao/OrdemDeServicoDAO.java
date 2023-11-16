@@ -1,13 +1,19 @@
 package br.projetoeletronica.dao;
 
 import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import br.projetoeletronica.model.Cliente;
+import br.projetoeletronica.model.Eletronico;
 import br.projetoeletronica.model.OrdemDeServico;
+import br.projetoeletronica.model.Tecnico;
+import br.projetoeletronica.model.TipoServico;
 
 public class OrdemDeServicoDAO extends GenericDAO<OrdemDeServico, Long>{
 	
@@ -53,7 +59,7 @@ public class OrdemDeServicoDAO extends GenericDAO<OrdemDeServico, Long>{
 	@Override
 	public void excluir(Long chave) {
 		try {
-			PreparedStatement ps = getConnection(). prepareStatement("DELETE FROM tiposServicos WHERE id = ?");
+			PreparedStatement ps = getConnection(). prepareStatement("DELETE FROM ordensServico WHERE id = ?");
 			ps.setLong(1, chave);
 			ps.executeUpdate();
 			closeStatement(ps);
@@ -71,13 +77,83 @@ public class OrdemDeServicoDAO extends GenericDAO<OrdemDeServico, Long>{
 	
 	@Override
 	public OrdemDeServico obter(Long chave) {
-		// TODO Auto-generated method stub
-		return null;
+		OrdemDeServico ordServico = null;
+		try {
+			PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM ordensServico WHERE id = ?");
+			ps.setLong(1, chave);
+			ResultSet r1 = ps.executeQuery();
+			if (r1.next()) {
+				String cpf = r1.getString("CLIENTE_CPF");
+				ClienteDAO clienteDAO = new ClienteDAO();
+				Cliente cliente = clienteDAO.obter(cpf);
+				
+				String numSerial = r1.getString("ELETRONICO_NUM_SERIAL");
+				EletronicoDAO eletDAO = new EletronicoDAO();
+				Eletronico eletronico = eletDAO.obter(numSerial);
+				
+				long idS = r1.getLong("TIPO_SERVICO_ID");
+				TipoServicoDAO ServDAO = new TipoServicoDAO();
+				TipoServico tipoServico = ServDAO.obter(idS);
+				
+				long idT = r1.getLong("TECNICO_ID");
+				TecnicoDAO tecDAO = new TecnicoDAO();
+				Tecnico tecnico = tecDAO.obter(idT);
+				
+				ordServico = new OrdemDeServico(r1.getLong("id"),
+						cliente, 
+						eletronico, 
+						tipoServico,
+						tecnico,
+						r1.getDouble("valor_total"),
+						r1.getDate("dt_registro"),
+						r1.getDate("dt_inicio"),
+						r1.getDate("dt_conclusao"));
+			closeStatement(ps);
+			}
+				
+		} catch (Exception e) {
+			System.out.println("Não foi possível obter a ordem de servico!");
+		}
+		return ordServico;
 	}
 	
 	@Override
 	public List<OrdemDeServico> obterTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<OrdemDeServico> lista = new ArrayList<>();
+		try {
+			ResultSet r1 = getStatment().executeQuery("SELECT * FROM ordensServico");
+			while(r1.next()) {
+				String cpf = r1.getString("CLIENTE_CPF");
+				ClienteDAO clienteDAO = new ClienteDAO();
+				Cliente cliente = clienteDAO.obter(cpf);
+				
+				String numSerial = r1.getString("ELETRONICO_NUM_SERIAL");
+				EletronicoDAO eletDAO = new EletronicoDAO();
+				Eletronico eletronico = eletDAO.obter(numSerial);
+				
+				long idS = r1.getLong("TIPO_SERVICO_ID");
+				TipoServicoDAO ServDAO = new TipoServicoDAO();
+				TipoServico tipoServico = ServDAO.obter(idS);
+				
+				long idT = r1.getLong("TECNICO_ID");
+				TecnicoDAO tecDAO = new TecnicoDAO();
+				Tecnico tecnico = tecDAO.obter(idT);
+			
+				lista.add(new OrdemDeServico(r1.getLong("id"),
+						cliente, 
+						eletronico, 
+						tipoServico,
+						tecnico,
+						r1.getDouble("valor_total"),
+						r1.getDate("dt_registro"),
+						r1.getDate("dt_inicio"),
+						r1.getDate("dt_conclusao")));
+			closeStatement(r1.getStatement());
+			}
+				
+		} catch (Exception e) {
+			System.out.println("Não foi possível obter as Ordens de Servicos!" + e.getMessage());
+		}
+		return lista;
 	}
 }
