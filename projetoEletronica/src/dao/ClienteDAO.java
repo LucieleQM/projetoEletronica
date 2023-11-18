@@ -1,4 +1,4 @@
-package br.projetoeletronica.dao;
+package dao;
 
 
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.projetoeletronica.model.Cliente;
+import model.Cliente;
 
 public class ClienteDAO extends GenericDAO<Cliente, String>{
 	

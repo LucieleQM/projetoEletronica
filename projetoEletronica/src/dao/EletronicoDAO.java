@@ -1,4 +1,4 @@
-package br.projetoeletronica.dao;
+package dao;
 
 import java.sql.PreparedStatement;
 
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.projetoeletronica.model.Cliente;
-import br.projetoeletronica.model.Eletronico;
+import model.Cliente;
+import model.Eletronico;
 
 public class EletronicoDAO extends GenericDAO<Eletronico, String>{
 	

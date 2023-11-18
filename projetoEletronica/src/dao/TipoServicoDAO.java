@@ -1,4 +1,4 @@
-package br.projetoeletronica.dao;
+package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.projetoeletronica.model.TipoServico;
+import model.TipoServico;
 
 public class TipoServicoDAO extends GenericDAO<TipoServico, Long>{
 	

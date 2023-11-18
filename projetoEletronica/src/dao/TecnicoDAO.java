@@ -1,4 +1,4 @@
-package br.projetoeletronica.dao;
+package dao;
 
 import java.sql.PreparedStatement;
 
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.projetoeletronica.model.Tecnico;
+import model.Tecnico;
 
 public class TecnicoDAO extends GenericDAO<Tecnico, Long>{
 

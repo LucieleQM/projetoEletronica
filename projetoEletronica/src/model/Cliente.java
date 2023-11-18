@@ -1,4 +1,4 @@
-package br.projetoeletronica.model;
+package model;
 
 import java.util.List;
 

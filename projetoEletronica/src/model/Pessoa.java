@@ -1,4 +1,4 @@
-package br.projetoeletronica.model;
+package model;
 
 public abstract class Pessoa {
 	private long id;

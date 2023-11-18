@@ -1,4 +1,4 @@
-package br.projetoeletronica.model;
+package model;
 
 import java.io.BufferedReader;
 
@@ -6,11 +6,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import br.projetoeletronica.dao.ClienteDAO;
-import br.projetoeletronica.dao.EletronicoDAO;
-import br.projetoeletronica.dao.OrdemDeServicoDAO;
-import br.projetoeletronica.dao.TecnicoDAO;
-import br.projetoeletronica.dao.TipoServicoDAO;
+import dao.ClienteDAO;
+import dao.EletronicoDAO;
+import dao.OrdemDeServicoDAO;
+import dao.TecnicoDAO;
+import dao.TipoServicoDAO;
 
 // A funçao dessa classe e coordenar as ações do sistema.
 // Essa classe possui metodos que envolvem a interaçao com o usuario.

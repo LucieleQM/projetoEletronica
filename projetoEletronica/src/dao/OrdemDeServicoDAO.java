@@ -1,4 +1,4 @@
-package br.projetoeletronica.dao;
+package dao;
 
 import java.sql.Date;
 
@@ -9,11 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.projetoeletronica.model.Cliente;
-import br.projetoeletronica.model.Eletronico;
-import br.projetoeletronica.model.OrdemDeServico;
-import br.projetoeletronica.model.Tecnico;
-import br.projetoeletronica.model.TipoServico;
+import model.Cliente;
+import model.Eletronico;
+import model.OrdemDeServico;
+import model.Tecnico;
+import model.TipoServico;
 
 public class OrdemDeServicoDAO extends GenericDAO<OrdemDeServico, Long>{
 	
